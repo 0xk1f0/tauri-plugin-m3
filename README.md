@@ -2,10 +2,35 @@
 
 Android [Material3](https://developer.android.com/develop/ui/compose/designsystems/material3)  Plugin for Tauri Apps
 
+| Platform | Supported |
+| -------- | --------- |
+| Android  | ✓         |
+
 ## Features
 
 - Access MaterialYou Dynamic Color Palette
 - Automatically enables Android's [EdgeToEdge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) StatusBar and NavigationBar Styling
+
+## Install
+
+Install the Core plugin by adding the following to your `Cargo.toml` file:
+
+`src-tauri/Cargo.toml`
+
+```toml
+[dependencies]
+tauri-plugin-m3 = { git = "https://github.com/0xk1f0/tauri-plugin-m3"}
+```
+
+You can install the JavaScript Guest bindings using your preferred JavaScript package manager:
+
+```sh
+pnpm add https://github.com/0xk1f0/tauri-plugin-m3
+# or
+npm add https://github.com/0xk1f0/tauri-plugin-m3
+# or
+yarn add https://github.com/0xk1f0/tauri-plugin-m3
+```
 
 ## Usage
 
