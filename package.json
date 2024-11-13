@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "build": "rollup -c",
+    "prepare": "rollup -c",
     "prepublishOnly": "pnpm build",
     "pretest": "pnpm build"
   },
