@@ -61,14 +61,14 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
             ret.put("inverseOnSurface", argbToRgba(colorScheme.inverseOnSurface.toArgb()));
             ret.put("outline", argbToRgba(colorScheme.outline.toArgb()));
         } else {
-            ret.put("error", "MaterialYou not supported on this device.")
+            ret.put("error", "MaterialYou not supported on this device!")
         }
         invoke.resolve(ret)
     }
 
     private fun argbToRgba(argb: Int): String {
         val hex = Integer.toHexString(argb);
-        return String.format("#%s%s", hex.substring(2), hex.substring(0, 2)).toUpperCase();
+        return String.format("#%s%s", hex.substring(2), hex.substring(0, 2)).uppercase();
     }
 
     private fun isUsingNightMode(context: Context): Boolean {

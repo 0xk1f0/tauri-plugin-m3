@@ -50,8 +50,8 @@ fn main() {
 Afterwards all the plugin's APIs are available through the JavaScript guest bindings:
 
 ```typescript
-import { colors } from "tauri-plugin-m3-api";
-import type { ColorScheme } from "tauri-plugin-m3-api";
+import { colors } from "tauri-plugin-m3";
+import type { ColorScheme } from "tauri-plugin-m3";
 
 let colorScheme: ColorScheme = await colors();
 

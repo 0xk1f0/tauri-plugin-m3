@@ -1,21 +1,20 @@
 <script>
-    import { colors } from "tauri-plugin-m3-api";
+    import { colors } from "tauri-plugin-m3";
     import { onMount } from "svelte";
 
-    let error = null;
     let colorScheme = null;
 
     onMount(() => {
         colors()
             .then((value) => {
-                colorScheme = value;
+                if (value) colorScheme = value;
             })
-            .catch((value) => (error = value));
+            .catch();
     });
 </script>
 
 <main class="container">
-    <h1>Tauri M3-Plugin Demo</h1>
+    <h1 style="margin-top: 4rem;">Tauri M3-Plugin Demo</h1>
     <div>
         {#if colorScheme !== null}
             {#each Object.entries(colorScheme) as [name, value]}
@@ -25,9 +24,8 @@
                     {name}
                 </h1>
             {/each}
-        {/if}
-        {#if error !== null}
-            <h1>{JSON.stringify(error)}</h1>
+        {:else}
+            <h1>MaterialYou unsupported on this device</h1>
         {/if}
     </div>
 </main>

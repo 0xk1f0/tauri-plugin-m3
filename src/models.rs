@@ -26,3 +26,9 @@ pub struct ColorScheme {
     pub inverse_on_surface: Option<String>,
     pub outline: Option<String>,
 }
+
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ColorSchemeError {
+    pub error: Option<String>,
+}
