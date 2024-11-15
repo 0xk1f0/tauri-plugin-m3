@@ -2,7 +2,7 @@
     "name": "tauri-plugin-m3",
     "version": "0.1.0",
     "author": "0xk1f0",
-    "description": "Android Material3 Plugin for Tauri Apps",
+    "description": "Android Material3/MaterialYou Plugin",
     "type": "module",
     "types": "./dist-js/index.d.ts",
     "main": "./dist-js/index.cjs",
