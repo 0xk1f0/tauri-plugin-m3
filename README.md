@@ -1,7 +1,7 @@
 <div align="center">
   <h1>tauri-plugin-m3 </h1>
   <video src="https://github.com/user-attachments/assets/7de52892-75c7-4918-8edd-1d86aadc063b" />
-  <p>Android <a href="[https://github.com/tauri-apps/tauri](https://developer.android.com/develop/ui/compose/designsystems/material3)">Material3</a> Plugin for Tauri Apps</p>
+  <p>Android <a href="[https://github.com/tauri-apps/tauri](https://developer.android.com/develop/ui/compose/designsystems/material3)">Material3/MaterialYou</a> Plugin</p>
 </div>
 
 ## Features
