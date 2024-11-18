@@ -1,7 +1,13 @@
 <div align="center">
-  <h1>tauri-plugin-m3 </h1>
-  <video src="https://github.com/user-attachments/assets/7de52892-75c7-4918-8edd-1d86aadc063b" />
-  <p>Android <a href="[https://github.com/tauri-apps/tauri](https://developer.android.com/develop/ui/compose/designsystems/material3)">Material3/MaterialYou</a> Plugin</p>
+  <h1>tauri-plugin-m3</h1>
+  <h3>Android <a href="https://developer.android.com/develop/ui/compose/designsystems/material3">Material3/MaterialYou</a> Plugin</h3>
+  <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xk1f0/tauri-plugin-m3?color=blue&style=flat-square" />
+  <img alt="Crates.io Release" src="https://img.shields.io/crates/v/tauri-plugin-m3?color=orange&style=flat-square" />
+  <img alt="NPM Release" src="https://img.shields.io/npm/v/tauri-plugin-m3?color=green&style=flat-square" />
+  <details>
+    <summary>Expand Demo</summary>
+    <video src="https://github.com/user-attachments/assets/7de52892-75c7-4918-8edd-1d86aadc063b" />
+  </details>
 </div>
 
 ## Features
