@@ -16,13 +16,20 @@ Install the Core plugin by adding the following to your `Cargo.toml` file:
 `src-tauri/Cargo.toml`
 
 ```toml
+# via crates.io
+[dependencies]
+tauri-plugin-m3 = "0.1.0"
+# or directly
 [dependencies]
 tauri-plugin-m3 = { git = "https://github.com/0xk1f0/tauri-plugin-m3" }
 ```
 
-You can install the JavaScript Guest bindings like this:
+And then install the JavaScript Guest bindings like this:
 
 ```sh
+# via npmjs.org
+npm install tauri-plugin-m3
+# or directly
 npm install https://github.com/0xk1f0/tauri-plugin-m3
 ```
 
