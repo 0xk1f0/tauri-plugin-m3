@@ -1,0 +1,43 @@
+name: "Publish Plugin"
+
+on:
+  release:
+    types: [ "published" ]
+
+jobs:
+  publish-npmjs:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node stable
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+      - name: Build guest bindings
+        run: |
+          npm install
+          npm run build
+      - name: Publish npmjs.org Package
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  publish-cratesio:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+      - name: Build guest bindings
+        run: |
+          npm install
+          npm run build
+      - name: Publish crates.io Package
+        run: cargo publish --token ${CRATES_AUTH_TOKEN} 
+        env:
+          CRATES_AUTH_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
