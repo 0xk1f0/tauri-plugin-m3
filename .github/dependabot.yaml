@@ -19,6 +19,6 @@ updates:
     commit-message:
       prefix: "chore"
     groups:
-      cargo:
+      npm:
         patterns:
           - "*"
