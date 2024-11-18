@@ -6,9 +6,18 @@ description = "Android Material3/MaterialYou Plugin"
 readme = "README.md"
 edition = "2021"
 rust-version = "1.77.2"
-exclude = ["/examples", "/webview-dist", "/webview-src", "/node_modules"]
 links = "tauri-plugin-m3"
 license = "GPL-3.0-only"
+exclude = [
+    "/examples",
+    "/webview-dist",
+    "/webview-src",
+    "/node_modules",
+    "guest-js/",
+    "rollup.config.js",
+    "tsconfig.json",
+    "package.json"
+]
 
 [dependencies]
 tauri = { version = "2.1.1" }
