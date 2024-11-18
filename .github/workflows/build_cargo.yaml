@@ -1,46 +1,35 @@
-name: "Build"
+name: "Build Cargo"
 
 on:
   push:
     branches: [ "master" ]
     paths:
       - '.github/workflows/**'
-      - 'package.json'
-      - 'Cargo.toml'
       - 'permissions/**'
       - 'android/**'
-      - 'guest-js/**'
       - 'src/**'
+      - 'Cargo.toml'
+      - 'build.rs'
   pull_request:
     branches: [ "master" ]
     paths:
       - '.github/workflows/**'
-      - 'package.json'
-      - 'Cargo.toml'
       - 'permissions/**'
       - 'android/**'
-      - 'guest-js/**'
       - 'src/**'
+      - 'Cargo.toml'
+      - 'build.rs'
 
 jobs:
-  build-plugin:
+  build-plugin-cargo:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Node stable
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
       - name: Install dependencies
         run: |
             sudo apt-get update
             sudo apt-get install -y curl wget file libxdo-dev build-essential libssl-dev libgtk-3-dev libappindicator3-dev libwebkit2gtk-4.1-dev librsvg2-dev
-      - name: Build guest bindings
-        run: |
-          npm install
-          npm run build
-      - name: Build plugin binary
+      - name: Build plugin binaries
         run: |
           cargo build --release
