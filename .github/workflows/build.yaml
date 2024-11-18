@@ -27,16 +27,20 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: install Node stable
+      - name: Install Node stable
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: install Rust stable
+      - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
-      - name: build guest bindings
+      - name: Install dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y curl wget file libxdo-dev build-essential libssl-dev libgtk-3-dev libappindicator3-dev libwebkit2gtk-4.1-dev librsvg2-dev
+      - name: Build guest bindings
         run: |
           npm install
           npm run build
-      - name: build plugin binary
+      - name: Build plugin binary
         run: |
           cargo build --release
