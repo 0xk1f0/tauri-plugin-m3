@@ -1,0 +1,42 @@
+name: "Build"
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - '.github/workflows/**'
+      - 'package.json'
+      - 'Cargo.toml'
+      - 'permissions/**'
+      - 'android/**'
+      - 'guest-js/**'
+      - 'src/**'
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - '.github/workflows/**'
+      - 'package.json'
+      - 'Cargo.toml'
+      - 'permissions/**'
+      - 'android/**'
+      - 'guest-js/**'
+      - 'src/**'
+
+jobs:
+  build-plugin:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: install Node stable
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+      - name: build guest bindings
+        run: |
+          npm install
+          npm run build
+      - name: build plugin binary
+        run: |
+          cargo build --release
