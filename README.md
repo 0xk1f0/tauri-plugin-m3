@@ -57,10 +57,11 @@ fn main() {
 Afterwards all the plugin's APIs are available through the JavaScript guest bindings:
 
 ```typescript
-import { colors } from "tauri-plugin-m3";
+import { M3 } from "tauri-plugin-m3";
 import type { ColorScheme } from "tauri-plugin-m3";
 
-let colorScheme: ColorScheme = await colors();
+const Material3 = new M3();
+let colorScheme = await Material3.fetch().colors();
 
 console.log(colorScheme.primary); // Outputs color in RGBA format f.E. "#F4F678FF"
 ```
@@ -134,14 +135,12 @@ Then initialize our colors when our app loads for the first time, f.E. in Svelte
 ```html
 <script>
     import { onMount } from 'svelte';
-    import { colors, updateEnvironment } from 'tauri-plugin-m3';
+    import { M3 } from 'tauri-plugin-m3';
 
-    onMount(() => {
-        // fetch the colors from device
-        colors().then((r) => {
-            // overwrite the CSS variables with new colors
-            if (r) updateEnvironment(r);
-        })
+    const Material3 = new M3();
+
+    onMount(async () => {
+        await Material3.fetch().apply();
     });
 </script>
 

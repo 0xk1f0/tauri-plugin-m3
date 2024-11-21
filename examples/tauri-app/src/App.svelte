@@ -1,22 +1,23 @@
-<script>
-    import { colors } from "tauri-plugin-m3";
+<script lang="ts">
+    import { M3 } from "tauri-plugin-m3";
+    import type { ColorScheme } from "tauri-plugin-m3";
     import { onMount } from "svelte";
 
-    let colorScheme = null;
+    let colorScheme: ColorScheme | false = false;
 
-    onMount(() => {
-        colors()
-            .then((value) => {
-                if (value) colorScheme = value;
-            })
-            .catch();
+    onMount(async () => {
+        const Material3 = new M3();
+        // get color values
+        colorScheme = await Material3.fetch().colors();
+        // update environment
+        await Material3.fetch().apply();
     });
 </script>
 
 <main class="container">
     <h1 style="margin-top: 4rem;">Tauri M3-Plugin Demo</h1>
     <div>
-        {#if colorScheme !== null}
+        {#if colorScheme !== false}
             {#each Object.entries(colorScheme) as [name, value]}
                 <h1
                     style="color: #FFFFFF !important; background-color: {value} !important;"
