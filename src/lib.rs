@@ -34,7 +34,10 @@ impl<R: Runtime, T: Manager<R>> crate::M3Ext<R> for T {
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("m3")
-        .invoke_handler(tauri::generate_handler![commands::colors])
+        .invoke_handler(tauri::generate_handler![
+            commands::colors,
+            commands::offsets
+        ])
         .setup(|app, api| {
             #[cfg(mobile)]
             let m3 = mobile::init(app, api)?;

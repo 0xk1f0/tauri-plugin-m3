@@ -1,4 +1,4 @@
-const COMMANDS: &[&str] = &["colors"];
+const COMMANDS: &[&str] = &["colors", "offsets"];
 
 fn main() {
     tauri_plugin::Builder::new(COMMANDS)

@@ -24,8 +24,9 @@ pub struct M3<R: Runtime>(PluginHandle<R>);
 
 impl<R: Runtime> M3<R> {
     pub fn colors(&self) -> crate::Result<ColorScheme> {
-        self.0
-            .run_mobile_plugin("colors", "")
-            .map_err(Into::into)
+        self.0.run_mobile_plugin("colors", "").map_err(Into::into)
+    }
+    pub fn offsets(&self) -> crate::Result<OffsetsScheme> {
+        self.0.run_mobile_plugin("offsets", "").map_err(Into::into)
     }
 }

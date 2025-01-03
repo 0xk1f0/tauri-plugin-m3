@@ -3,6 +3,9 @@ package com.plugin.m3
 import android.app.Activity
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import android.webkit.WebView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import android.os.Build
 import android.graphics.Color
 import android.content.res.Configuration
@@ -23,13 +26,13 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         val window = activity.getWindow()
         val context = activity.getApplication().getApplicationContext()
         val darkTheme = isUsingNightMode(context)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         if (!darkTheme && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val insetsController = activity.getWindow().getInsetsController()!!
             insetsController.setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS)
         }
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
-        window.setDecorFitsSystemWindows(false)
     }
     @Command
     fun colors(invoke: Invoke) {
@@ -63,6 +66,18 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         } else {
             ret.put("error", "MaterialYou not supported on this device!")
         }
+        invoke.resolve(ret)
+    }
+    @Command
+    fun offsets(invoke: Invoke) {
+        val ret = JSObject()
+        val window = activity.getWindow()
+        val controller = ViewCompat.getRootWindowInsets(window.getDecorView())!!
+        val insets = controller.getInsets(WindowInsetsCompat.Type.systemBars())
+        ret.put("top", insets.top.toString());
+        ret.put("bottom", insets.bottom.toString());
+        ret.put("left", insets.left.toString());
+        ret.put("right", insets.right.toString());
         invoke.resolve(ret)
     }
 

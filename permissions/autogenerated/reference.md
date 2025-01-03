@@ -3,6 +3,7 @@
 Default permissions for the plugin
 
 - `allow-colors`
+- `allow-offsets`
 
 ## Permission Table
 
@@ -42,25 +43,12 @@ Denies the colors command without any pre-configured scope.
 <tr>
 <td>
 
-`m3:allow-fetch`
+`m3:allow-offsets`
 
 </td>
 <td>
 
-Enables the fetch command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`m3:deny-fetch`
-
-</td>
-<td>
-
-Denies the fetch command without any pre-configured scope.
+Enables the offsets command without any pre-configured scope.
 
 </td>
 </tr>
@@ -68,25 +56,12 @@ Denies the fetch command without any pre-configured scope.
 <tr>
 <td>
 
-`m3:allow-ping`
+`m3:deny-offsets`
 
 </td>
 <td>
 
-Enables the ping command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`m3:deny-ping`
-
-</td>
-<td>
-
-Denies the ping command without any pre-configured scope.
+Denies the offsets command without any pre-configured scope.
 
 </td>
 </tr>

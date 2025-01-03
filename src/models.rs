@@ -32,3 +32,18 @@ pub struct ColorScheme {
 pub struct ColorSchemeError {
     pub error: Option<String>,
 }
+
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OffsetsScheme {
+    pub top: Option<String>,
+    pub bottom: Option<String>,
+    pub left: Option<String>,
+    pub right: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OffsetsSchemeError {
+    pub error: Option<String>,
+}

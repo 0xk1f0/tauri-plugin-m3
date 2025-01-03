@@ -15,7 +15,12 @@ pub struct M3<R: Runtime>(AppHandle<R>);
 impl<R: Runtime> M3<R> {
     pub fn colors(&self) -> crate::Result<ColorSchemeError> {
         Ok(ColorSchemeError {
-            error: Some("MaterialYou not supported on this device!".to_string())
+            error: Some("MaterialYou not supported on this device!".to_string()),
+        })
+    }
+    pub fn offsets(&self) -> crate::Result<OffsetsSchemeError> {
+        Ok(OffsetsSchemeError {
+            error: Some("Offsets are not supported on this device!".to_string()),
         })
     }
 }

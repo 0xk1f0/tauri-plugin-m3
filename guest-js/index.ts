@@ -25,6 +25,24 @@ export type ColorScheme = {
     outline?: string;
 };
 
+export type OffsetsScheme = {
+    top?: string;
+    bottom?: string;
+    left?: string;
+    right?: string;
+};
+
+/**
+ * Get all offsets for Edge-To-Edge Display
+ */
+export async function getOffsets(): Promise<OffsetsScheme | false> {
+    try {
+        return await invoke<OffsetsScheme>("plugin:m3|offsets");
+    } catch {
+        return false;
+    }
+}
+
 /**
  * Main `tauri-plugin-m3` Utility Class
  */
