@@ -18,13 +18,15 @@
 </script>
 
 <main class="container">
-    <h1>Tauri M3-Plugin Demo</h1>
-    <div>
+    <div style="margin: 0; padding: 0; margin-top: {offsets ? offsets.top : 0}px !important;">
+        <h1 style="margin: 0; padding: 0;">Tauri M3-Plugin Demo</h1>
+    </div>
+    <div style="margin: 0; padding: 0;">
         {#if offsets !== false}
             <h1>Offsets</h1>
             {#each Object.entries(offsets) as [name, value]}
                 <h2
-                    style="color: #FFFFFF !important;"
+                    style="color: #FFFFFF !important; margin-top: 4px;"
                 >
                     {name}: {value}
                 </h2>
@@ -33,12 +35,12 @@
             <h1>Edge-To-Edge offsets unsupported on this device</h1>
         {/if}
     </div>
-    <div>
+    <div style="margin: 0; padding: 0; margin-bottom: {offsets ? offsets.bottom : 0}px !important;">
         {#if colorScheme !== false}
             <h1>Colors</h1>
             {#each Object.entries(colorScheme) as [name, value]}
                 <h2
-                    style="color: #FFFFFF !important; background-color: {value} !important;"
+                    style="color: #FFFFFF !important; background-color: {value} !important; margin-top: 4px;"
                 >
                     {name}
                 </h2>
