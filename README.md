@@ -60,8 +60,7 @@ Afterwards all the plugin's APIs are available through the JavaScript guest bind
 import { M3 } from "tauri-plugin-m3";
 import type { ColorScheme } from "tauri-plugin-m3";
 
-const Material3 = new M3();
-let colorScheme = await Material3.fetch().colors();
+let colorScheme = await M3.fetch().colors();
 
 console.log(colorScheme.primary); // Outputs color in RGBA format f.E. "#F4F678FF"
 ```

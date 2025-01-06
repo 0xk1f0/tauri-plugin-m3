@@ -13,14 +13,14 @@ pub fn init<R: Runtime, C: DeserializeOwned>(
 pub struct M3<R: Runtime>(AppHandle<R>);
 
 impl<R: Runtime> M3<R> {
-    pub fn colors(&self) -> crate::Result<ColorSchemeError> {
+    pub fn colors(&self, _theme: String) -> crate::Result<ColorSchemeError> {
         Ok(ColorSchemeError {
             error: Some("MaterialYou not supported on this device!".to_string()),
         })
     }
-    pub fn offsets(&self) -> crate::Result<OffsetsSchemeError> {
-        Ok(OffsetsSchemeError {
-            error: Some("Offsets are not supported on this device!".to_string()),
+    pub fn insets(&self) -> crate::Result<InsetsSchemeError> {
+        Ok(InsetsSchemeError {
+            error: Some("Insets are not supported on this device!".to_string()),
         })
     }
 }

@@ -35,15 +35,20 @@ pub struct ColorSchemeError {
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct OffsetsScheme {
-    pub top: Option<String>,
-    pub bottom: Option<String>,
-    pub left: Option<String>,
-    pub right: Option<String>,
+pub struct InsetsScheme {
+    pub raw_inset_top: Option<u32>,
+    pub raw_inset_bottom: Option<u32>,
+    pub raw_inset_left: Option<u32>,
+    pub raw_inset_right: Option<u32>,
+    pub adjusted_inset_top: Option<u32>,
+    pub adjusted_inset_bottom: Option<u32>,
+    pub adjusted_inset_left: Option<u32>,
+    pub adjusted_inset_right: Option<u32>,
+    pub scale_factor: Option<f64>,
 }
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct OffsetsSchemeError {
+pub struct InsetsSchemeError {
     pub error: Option<String>,
 }

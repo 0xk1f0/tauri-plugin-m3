@@ -1717,9 +1717,9 @@
           "const": "m3:allow-colors"
         },
         {
-          "description": "Enables the offsets command without any pre-configured scope.",
+          "description": "Enables the insets command without any pre-configured scope.",
           "type": "string",
-          "const": "m3:allow-offsets"
+          "const": "m3:allow-insets"
         },
         {
           "description": "Denies the colors command without any pre-configured scope.",
@@ -1727,9 +1727,9 @@
           "const": "m3:deny-colors"
         },
         {
-          "description": "Denies the offsets command without any pre-configured scope.",
+          "description": "Denies the insets command without any pre-configured scope.",
           "type": "string",
-          "const": "m3:deny-offsets"
+          "const": "m3:deny-insets"
         }
       ]
     },

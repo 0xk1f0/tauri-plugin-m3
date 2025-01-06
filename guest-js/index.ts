@@ -25,57 +25,69 @@ export type ColorScheme = {
     outline?: string;
 };
 
-export type OffsetsScheme = {
-    top?: string;
-    bottom?: string;
-    left?: string;
-    right?: string;
+export type InsetsScheme = {
+    rawInsetTop?: number;
+    rawInsetBottom?: number;
+    rawInsetLeft?: number;
+    rawInsetRight?: number;
+    adjustedInsetTop?: number;
+    adjustedInsetBottom?: number;
+    adjustedInsetLeft?: number;
+    adjustedInsetRight?: number;
+    scaleFactor?: number;
 };
 
-/**
- * Get all offsets for Edge-To-Edge Display
- */
-export async function getOffsets(): Promise<OffsetsScheme | false> {
+async function getColors(
+    colorScheme: Promise<ColorScheme>,
+): Promise<ColorScheme | false> {
     try {
-        return await invoke<OffsetsScheme>("plugin:m3|offsets");
+        let scheme = await colorScheme;
+        if ("error" in scheme) return false;
+        return scheme;
     } catch {
         return false;
     }
+}
+
+async function applyScheme(colorScheme: Promise<ColorScheme>): Promise<boolean> {
+    let scheme = await getColors(colorScheme);
+    if (!scheme) return false;
+    for (const [varName, colorValue] of Object.entries(colorScheme)) {
+        document.documentElement.style.setProperty(
+            `--${varName}`,
+            colorValue,
+        );
+    }
+    return true;
 }
 
 /**
  * Main `tauri-plugin-m3` Utility Class
  */
 export class M3 {
-    private async colors(
-        colorScheme: Promise<ColorScheme>,
-    ): Promise<ColorScheme | false> {
+    /**
+     * Get all inset properties for proper Edge-To-Edge Display
+     * @example
+     * ```javascript
+     * import { M3 } from "tauri-plugin-m3";
+     *
+     * let insets = await M3.getInsets();
+     * ```
+     * @return A InsetsScheme object or false if unsuccessful
+     */
+    public static async getInsets(): Promise<InsetsScheme | false> {
         try {
-            let scheme = await colorScheme;
-            if ("error" in scheme) return false;
-            return scheme;
+            return await invoke<InsetsScheme>("plugin:m3|insets");
         } catch {
             return false;
         }
     }
 
-    private async apply(colorScheme: Promise<ColorScheme>): Promise<boolean> {
-        let scheme = await this.colors(colorScheme);
-        if (!scheme) return false;
-        for (const [varName, colorValue] of Object.entries(colorScheme)) {
-            document.documentElement.style.setProperty(
-                `--${varName}`,
-                colorValue,
-            );
-        }
-        return true;
-    }
-
     /**
      * Fetch Material3 colors from Android device
      */
-    public fetch() {
-        let scheme = invoke<ColorScheme>("plugin:m3|colors");
+    public static fetch(theme: "dark" | "light" | "system" = "system") {
+        let scheme = invoke<ColorScheme>("plugin:m3|colors", { theme });
         return {
             /**
              * Return the fetched ColorScheme
@@ -83,13 +95,12 @@ export class M3 {
              * ```javascript
              * import { M3 } from "tauri-plugin-m3";
              *
-             * const Material3 = new M3();
-             * let colorScheme = await Material3.fetch().colors();
+             * let colorScheme = await M3.fetch().colors();
              * ```
              * @return A ColorScheme object or false if unsuccessful
              */
             colors: () => {
-                return this.colors(scheme);
+                return getColors(scheme);
             },
             /**
              * Apply all colors in ColorScheme as CSS environment variables
@@ -103,26 +114,8 @@ export class M3 {
              * @return A boolean indicating if successful or not
              */
             apply: () => {
-                return this.apply(scheme);
+                return applyScheme(scheme);
             },
         };
-    }
-}
-
-/**
- * @deprecated Fetch Material3 colors from Android device
- */
-export async function colors(): Promise<ColorScheme | false> {
-    return await invoke<ColorScheme>("plugin:m3|colors").then(
-        (r: ColorScheme | null) => (r ? ("error" in r ? false : r) : false),
-    );
-}
-
-/**
- * @deprecated Set all colors in ColorScheme as CSS environment variables
- */
-export function updateEnvironment(colorScheme: ColorScheme) {
-    for (const [varName, colorValue] of Object.entries(colorScheme)) {
-        document.documentElement.style.setProperty(`--${varName}`, colorValue);
     }
 }

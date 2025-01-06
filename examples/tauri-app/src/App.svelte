@@ -1,49 +1,74 @@
 <script lang="ts">
-    import { M3, getOffsets } from "tauri-plugin-m3";
-    import type { ColorScheme, OffsetsScheme } from "tauri-plugin-m3";
+    import { M3 } from "tauri-plugin-m3";
+    import type { ColorScheme, InsetsScheme } from "tauri-plugin-m3";
     import { onMount } from "svelte";
 
     let colorScheme: ColorScheme | false = false;
-    let offsets: OffsetsScheme | false = false;
+    let insets: InsetsScheme | false = false;
+    let selectedTheme: string = "system";
 
     onMount(async () => {
-        const Material3 = new M3();
         // get color values
-        colorScheme = await Material3.fetch().colors();
-        // get offsets
-        offsets = await getOffsets();
+        colorScheme = await M3.fetch().colors();
+        // get insets
+        insets = await M3.getInsets();
         // update environment
-        await Material3.fetch().apply();
+        await M3.fetch().apply();
     });
+
+    async function switchTheme() {
+        if (
+            selectedTheme == "dark" ||
+            selectedTheme == "light" ||
+            selectedTheme == "system"
+        ) {
+            colorScheme = await M3.fetch(selectedTheme).colors();
+            await M3.fetch().apply();
+        }
+    }
 </script>
 
 <main class="container">
-    <div style="margin: 0; padding: 0; margin-top: {offsets ? offsets.top : 0}px !important;">
+    <div
+        style="margin: 0; padding: 0; margin-top: {insets
+            ? insets.adjustedInsetTop
+            : 0}px !important;"
+    >
         <h1 style="margin: 0; padding: 0;">Tauri M3-Plugin Demo</h1>
     </div>
     <div style="margin: 0; padding: 0;">
-        {#if offsets !== false}
-            <h1>Offsets</h1>
-            {#each Object.entries(offsets) as [name, value]}
-                <h2
-                    style="color: #FFFFFF !important; margin-top: 4px;"
-                >
+        {#if insets !== false}
+            <h1>Insets</h1>
+            {#each Object.entries(insets) as [name, value]}
+                <p style="color: #FFFFFF !important; margin-top: 4px;">
                     {name}: {value}
-                </h2>
+                </p>
             {/each}
         {:else}
-            <h1>Edge-To-Edge offsets unsupported on this device</h1>
+            <h1>Edge-To-Edge insets unsupported on this device</h1>
         {/if}
     </div>
-    <div style="margin: 0; padding: 0; margin-bottom: {offsets ? offsets.bottom : 0}px !important;">
+    <div style="margin: 0; padding: 0;">
+        <h1>Theme</h1>
+        <select bind:value={selectedTheme} id="theme" on:change={switchTheme}>
+            <option value="system" selected>System</option>
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+        </select>
+    </div>
+    <div
+        style="margin: 0; padding: 0; margin-bottom: {insets
+            ? insets.adjustedInsetBottom
+            : 0}px !important;"
+    >
         {#if colorScheme !== false}
             <h1>Colors</h1>
             {#each Object.entries(colorScheme) as [name, value]}
-                <h2
+                <p
                     style="color: #FFFFFF !important; background-color: {value} !important; margin-top: 4px;"
                 >
                     {name}
-                </h2>
+                </p>
             {/each}
         {:else}
             <h1>MaterialYou unsupported on this device</h1>

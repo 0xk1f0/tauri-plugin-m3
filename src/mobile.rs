@@ -1,4 +1,5 @@
 use serde::de::DeserializeOwned;
+use serde::Serialize;
 use tauri::{
     plugin::{PluginApi, PluginHandle},
     AppHandle, Runtime,
@@ -22,11 +23,16 @@ pub fn init<R: Runtime, C: DeserializeOwned>(
 /// Access to the m3 APIs.
 pub struct M3<R: Runtime>(PluginHandle<R>);
 
+#[derive(Serialize)]
+struct ColorSchemePayload {
+    theme: String
+}
+
 impl<R: Runtime> M3<R> {
-    pub fn colors(&self) -> crate::Result<ColorScheme> {
-        self.0.run_mobile_plugin("colors", "").map_err(Into::into)
+    pub fn colors(&self, theme: String) -> crate::Result<ColorScheme> {
+        self.0.run_mobile_plugin("colors", ColorSchemePayload { theme }).map_err(Into::into)
     }
-    pub fn offsets(&self) -> crate::Result<OffsetsScheme> {
-        self.0.run_mobile_plugin("offsets", "").map_err(Into::into)
+    pub fn insets(&self) -> crate::Result<InsetsScheme> {
+        self.0.run_mobile_plugin("insets", "").map_err(Into::into)
     }
 }

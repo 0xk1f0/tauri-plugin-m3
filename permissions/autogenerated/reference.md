@@ -3,7 +3,7 @@
 Default permissions for the plugin
 
 - `allow-colors`
-- `allow-offsets`
+- `allow-insets`
 
 ## Permission Table
 
@@ -43,12 +43,12 @@ Denies the colors command without any pre-configured scope.
 <tr>
 <td>
 
-`m3:allow-offsets`
+`m3:allow-insets`
 
 </td>
 <td>
 
-Enables the offsets command without any pre-configured scope.
+Enables the insets command without any pre-configured scope.
 
 </td>
 </tr>
@@ -56,12 +56,12 @@ Enables the offsets command without any pre-configured scope.
 <tr>
 <td>
 
-`m3:deny-offsets`
+`m3:deny-insets`
 
 </td>
 <td>
 
-Denies the offsets command without any pre-configured scope.
+Denies the insets command without any pre-configured scope.
 
 </td>
 </tr>

@@ -2,6 +2,7 @@ package com.plugin.m3
 
 import android.app.Activity
 import android.webkit.WebView
+import android.view.Window
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -21,20 +22,21 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import app.tauri.plugin.Invoke
 
+@InvokeArg
+class ColorsOptions {
+    lateinit var theme: String
+}
+
 @TauriPlugin
 class M3Plugin(private val activity: Activity): Plugin(activity) {
     override fun load(webView: WebView) {
         val window = activity.getWindow()
         val context = activity.getApplication().getApplicationContext()
-        val darkTheme = isUsingNightMode(context)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val controller = WindowCompat.getInsetsController(window, window.decorView)
-        if (!darkTheme) {
-            controller.setAppearanceLightStatusBars(true)
-            controller.setAppearanceLightNavigationBars(true)
+        if (isNightMode(context)) {
+            setStatusBar(window, "dark")
         } else {
-            controller.setAppearanceLightStatusBars(false)
-            controller.setAppearanceLightNavigationBars(false)
+            setStatusBar(window, "light")
         }
         window.apply {
             statusBarColor = Color.TRANSPARENT;
@@ -44,10 +46,14 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun colors(invoke: Invoke) {
         val ret = JSObject()
+        val args = invoke.parseArgs(ColorsOptions::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val context = activity.getApplication().getApplicationContext()
-            val isDarkTheme = isUsingNightMode(context)
-            val colorScheme = if (isDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            val colorScheme = if (args.theme == "dark" || args.theme == "light") {
+                if (args.theme == "dark") dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            } else {
+                if (isNightMode(context)) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            }
             ret.put("primary", argbToRgba(colorScheme.primary.toArgb()))
             ret.put("onPrimary", argbToRgba(colorScheme.onPrimary.toArgb()))
             ret.put("primaryContainer", argbToRgba(colorScheme.primaryContainer.toArgb()))
@@ -76,18 +82,34 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         invoke.resolve(ret)
     }
     @Command
-    fun offsets(invoke: Invoke) {
+    fun insets(invoke: Invoke) {
         val ret = JSObject()
         val window = activity.getWindow()
         val context = activity.getApplication().getApplicationContext()
         val displayMetrics = context.getResources().getDisplayMetrics()
-        val controller = ViewCompat.getRootWindowInsets(window.decorView)!!
-        val insets = controller.getInsets(WindowInsetsCompat.Type.systemBars())
-        ret.put("top", round(insets.top / displayMetrics.density).toInt().toString())
-        ret.put("bottom", round(insets.bottom / displayMetrics.density).toInt().toString())
-        ret.put("left", round(insets.left / displayMetrics.density).toInt().toString())
-        ret.put("right", round(insets.right / displayMetrics.density).toInt().toString())
+        val rootInsets = ViewCompat.getRootWindowInsets(window.decorView)!!
+        val insets = rootInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+        ret.put("adjustedInsetTop", round(insets.top / displayMetrics.density).toInt())
+        ret.put("adjustedInsetBottom", round(insets.bottom / displayMetrics.density).toInt())
+        ret.put("adjustedInsetLeft", round(insets.left / displayMetrics.density).toInt())
+        ret.put("adjustedInsetRight", round(insets.right / displayMetrics.density).toInt())
+        ret.put("rawInsetTop", insets.top)
+        ret.put("rawInsetBottom", insets.bottom)
+        ret.put("rawInsetLeft", insets.left)
+        ret.put("rawInsetRight", insets.right)
+        ret.put("scaleFactor", displayMetrics.density)
         invoke.resolve(ret)
+    }
+
+    private fun setStatusBar(window: Window, color: String) {
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        if (color == "light") {
+            controller.setAppearanceLightStatusBars(true)
+            controller.setAppearanceLightNavigationBars(true)
+        } else {
+            controller.setAppearanceLightStatusBars(false)
+            controller.setAppearanceLightNavigationBars(false)
+        }
     }
 
     private fun argbToRgba(argb: Int): String {
@@ -95,7 +117,7 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         return String.format("#%s%s", hex.substring(2), hex.substring(0, 2)).uppercase()
     }
 
-    private fun isUsingNightMode(context: Context): Boolean {
+    private fun isNightMode(context: Context): Boolean {
         return when (context.getResources().getConfiguration().uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> true
             Configuration.UI_MODE_NIGHT_NO -> false
