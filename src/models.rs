@@ -29,12 +29,6 @@ pub struct ColorScheme {
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ColorSchemeError {
-    pub error: Option<String>,
-}
-
-#[derive(Debug, Clone, Default, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
 pub struct InsetsScheme {
     pub raw_inset_top: Option<u32>,
     pub raw_inset_bottom: Option<u32>,
@@ -49,6 +43,12 @@ pub struct InsetsScheme {
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct InsetsSchemeError {
+pub struct BarColorScheme {
+    pub color: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct M3Error {
     pub error: Option<String>,
 }

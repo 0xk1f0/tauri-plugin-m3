@@ -37,6 +37,10 @@ export type InsetsScheme = {
     scaleFactor?: number;
 };
 
+export type BarColorScheme = {
+    color?: string;
+};
+
 async function getColors(
     colorScheme: Promise<ColorScheme>,
 ): Promise<ColorScheme | false> {
@@ -84,6 +88,26 @@ export class M3 {
     }
 
     /**
+     * Set the current status and navigation bar color
+     * @example
+     * ```javascript
+     * import { M3 } from "tauri-plugin-m3";
+     * 
+     * // either "dark", "light" or "system"
+     * // default is "system"
+     * let status = await M3.barColor("dark");
+     * ```
+     * @return A BarColorScheme object or false if unsuccessful
+     */
+    public static async barColor(color: "dark" | "light" | "system" = "system"): Promise<BarColorScheme | false> {
+        try {
+            return await invoke<BarColorScheme>("plugin:m3|bar_color", { color });
+        } catch {
+            return false;
+        }
+    }
+
+    /**
      * Fetch Material3 colors from Android device
      */
     public static fetch(theme: "dark" | "light" | "system" = "system") {
@@ -94,8 +118,10 @@ export class M3 {
              * @example
              * ```javascript
              * import { M3 } from "tauri-plugin-m3";
-             *
-             * let colorScheme = await M3.fetch().colors();
+             * 
+             * // either "dark", "light" or "system"
+             * // default is "system"
+             * let colorScheme = await M3.fetch("dark").colors();
              * ```
              * @return A ColorScheme object or false if unsuccessful
              */
@@ -108,8 +134,9 @@ export class M3 {
              * ```javascript
              * import { M3 } from "tauri-plugin-m3";
              *
-             * const Material3 = new M3();
-             * await Material3.fetch().apply();
+             * // either "dark", "light" or "system"
+             * // default is "system"
+             * await M3.fetch("dark").apply();
              * ```
              * @return A boolean indicating if successful or not
              */

@@ -17,13 +17,25 @@ pub(crate) async fn insets<R: Runtime>(app: AppHandle<R>) -> Result<InsetsScheme
 }
 
 #[command]
+#[cfg(mobile)]
+pub(crate) async fn bar_color<R: Runtime>(app: AppHandle<R>, color: String) -> Result<BarColorScheme> {
+    app.m3().bar_color(color)
+}
+
+#[command]
 #[cfg(desktop)]
-pub(crate) async fn colors<R: Runtime>(app: AppHandle<R>, theme: String) -> Result<ColorSchemeError> {
+pub(crate) async fn colors<R: Runtime>(app: AppHandle<R>, theme: String) -> Result<M3Error> {
     app.m3().colors(theme)
 }
 
 #[command]
 #[cfg(desktop)]
-pub(crate) async fn insets<R: Runtime>(app: AppHandle<R>) -> Result<InsetsSchemeError> {
+pub(crate) async fn insets<R: Runtime>(app: AppHandle<R>) -> Result<M3Error> {
     app.m3().insets()
+}
+
+#[command]
+#[cfg(desktop)]
+pub(crate) async fn bar_color<R: Runtime>(app: AppHandle<R>, color: String) -> Result<M3Error> {
+    app.m3().bar_color(color)
 }

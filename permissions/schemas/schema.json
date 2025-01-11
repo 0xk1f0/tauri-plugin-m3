@@ -295,6 +295,16 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "Enables the bar_color command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-bar-color"
+        },
+        {
+          "description": "Denies the bar_color command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-bar-color"
+        },
+        {
           "description": "Enables the colors command without any pre-configured scope.",
           "type": "string",
           "const": "allow-colors"

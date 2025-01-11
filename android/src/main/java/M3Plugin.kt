@@ -14,6 +14,7 @@ import android.content.Context
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.ColorScheme
 import kotlin.math.round
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
@@ -27,17 +28,16 @@ class ColorsOptions {
     lateinit var theme: String
 }
 
+@InvokeArg
+class BarOptions {
+    lateinit var color: String
+}
+
 @TauriPlugin
 class M3Plugin(private val activity: Activity): Plugin(activity) {
     override fun load(webView: WebView) {
         val window = activity.getWindow()
-        val context = activity.getApplication().getApplicationContext()
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        if (isNightMode(context)) {
-            setStatusBar(window, "dark")
-        } else {
-            setStatusBar(window, "light")
-        }
         window.apply {
             statusBarColor = Color.TRANSPARENT;
             navigationBarColor = Color.TRANSPARENT;
@@ -49,10 +49,11 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         val args = invoke.parseArgs(ColorsOptions::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val context = activity.getApplication().getApplicationContext()
-            val colorScheme = if (args.theme == "dark" || args.theme == "light") {
-                if (args.theme == "dark") dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            val colorScheme: ColorScheme
+            if (args.theme == "dark" || args.theme == "light") {
+                colorScheme = if (args.theme == "dark") dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
             } else {
-                if (isNightMode(context)) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+                colorScheme = if (isNightMode(context)) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
             }
             ret.put("primary", argbToRgba(colorScheme.primary.toArgb()))
             ret.put("onPrimary", argbToRgba(colorScheme.onPrimary.toArgb()))
@@ -100,16 +101,25 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         ret.put("scaleFactor", displayMetrics.density)
         invoke.resolve(ret)
     }
-
-    private fun setStatusBar(window: Window, color: String) {
-        val controller = WindowCompat.getInsetsController(window, window.decorView)
-        if (color == "light") {
-            controller.setAppearanceLightStatusBars(true)
-            controller.setAppearanceLightNavigationBars(true)
+    @Command
+    fun barColor(invoke: Invoke) {
+        val ret = JSObject()
+        val args = invoke.parseArgs(BarOptions::class.java)
+        val window = activity.getWindow()
+        val context = activity.getApplication().getApplicationContext()
+        if (args.color == "dark" || args.color == "light") {
+            if (args.color == "dark") setLightStatusBar(window, true) else setLightStatusBar(window, false)
         } else {
-            controller.setAppearanceLightStatusBars(false)
-            controller.setAppearanceLightNavigationBars(false)
+            if (isNightMode(context)) setLightStatusBar(window, false) else setLightStatusBar(window, true)
         }
+        ret.put("color", args.color)
+        invoke.resolve(ret)
+    }
+
+    private fun setLightStatusBar(window: Window, isLight: Boolean) {
+        val rootView = window.getDecorView().getRootView()
+        WindowCompat.getInsetsController(window, rootView).isAppearanceLightStatusBars = isLight
+        WindowCompat.getInsetsController(window, rootView).isAppearanceLightNavigationBars = isLight
     }
 
     private fun argbToRgba(argb: Int): String {

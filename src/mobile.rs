@@ -28,11 +28,19 @@ struct ColorSchemePayload {
     theme: String
 }
 
+#[derive(Serialize)]
+struct BarColorPayload {
+    color: String
+}
+
 impl<R: Runtime> M3<R> {
     pub fn colors(&self, theme: String) -> crate::Result<ColorScheme> {
         self.0.run_mobile_plugin("colors", ColorSchemePayload { theme }).map_err(Into::into)
     }
     pub fn insets(&self) -> crate::Result<InsetsScheme> {
         self.0.run_mobile_plugin("insets", "").map_err(Into::into)
+    }
+    pub fn bar_color(&self, color: String) -> crate::Result<BarColorScheme> {
+        self.0.run_mobile_plugin("barColor", BarColorPayload { color }).map_err(Into::into)
     }
 }

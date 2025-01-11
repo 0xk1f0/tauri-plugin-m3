@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-bar-color"
+description = "Enables the bar_color command without any pre-configured scope."
+commands.allow = ["bar_color"]
+
+[[permission]]
+identifier = "deny-bar-color"
+description = "Denies the bar_color command without any pre-configured scope."
+commands.deny = ["bar_color"]

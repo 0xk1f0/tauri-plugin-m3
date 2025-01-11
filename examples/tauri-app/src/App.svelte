@@ -6,6 +6,7 @@
     let colorScheme: ColorScheme | false = false;
     let insets: InsetsScheme | false = false;
     let selectedTheme: string = "system";
+    let selectedBarColor: string = "";
 
     onMount(async () => {
         // get color values
@@ -13,7 +14,9 @@
         // get insets
         insets = await M3.getInsets();
         // update environment
-        await M3.fetch().apply();
+        await M3.fetch("system").apply();
+        // set bar color
+        await M3.barColor("system");
     });
 
     async function switchTheme() {
@@ -24,6 +27,12 @@
         ) {
             colorScheme = await M3.fetch(selectedTheme).colors();
             await M3.fetch().apply();
+        }
+    }
+
+    async function switchBar() {
+        if (selectedBarColor == "dark" || selectedBarColor == "light") {
+            let result = await M3.barColor(selectedBarColor);
         }
     }
 </script>
@@ -47,6 +56,15 @@
         {:else}
             <h1>Edge-To-Edge insets unsupported on this device</h1>
         {/if}
+    </div>
+    <div style="margin: 0; padding: 0;">
+        <h1>Bar Color</h1>
+        <select bind:value={selectedBarColor} id="bar">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+        </select>
+        <br>
+        <button on:click={switchBar}>Apply</button>
     </div>
     <div style="margin: 0; padding: 0;">
         <h1>Theme</h1>

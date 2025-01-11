@@ -4,6 +4,7 @@ Default permissions for the plugin
 
 - `allow-colors`
 - `allow-insets`
+- `allow-bar-color`
 
 ## Permission Table
 
@@ -13,6 +14,32 @@ Default permissions for the plugin
 <th>Description</th>
 </tr>
 
+
+<tr>
+<td>
+
+`m3:allow-bar-color`
+
+</td>
+<td>
+
+Enables the bar_color command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`m3:deny-bar-color`
+
+</td>
+<td>
+
+Denies the bar_color command without any pre-configured scope.
+
+</td>
+</tr>
 
 <tr>
 <td>
