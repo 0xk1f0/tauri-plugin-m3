@@ -12,8 +12,10 @@
 
 ## Features
 
-- Access MaterialYou Dynamic Color Palette
 - Automatically enables Android's [EdgeToEdge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) StatusBar and NavigationBar Styling
+- Access MaterialYou Dynamic Color Palette
+- Change Status Bar and Navigation Bar Color
+- Access Window Insets to align EdgeToEdge layout correctly
 
 ## Install
 
@@ -24,7 +26,7 @@ Install the Core plugin by adding the following to your `Cargo.toml` file:
 ```toml
 # via crates.io
 [dependencies]
-tauri-plugin-m3 = "0.1.1"
+tauri-plugin-m3 = "0.2.0"
 # or directly
 [dependencies]
 tauri-plugin-m3 = { git = "https://github.com/0xk1f0/tauri-plugin-m3" }
@@ -60,6 +62,7 @@ Afterwards all the plugin's APIs are available through the JavaScript guest bind
 import { M3 } from "tauri-plugin-m3";
 import type { ColorScheme } from "tauri-plugin-m3";
 
+// choose either "dark", "light" or default to "system"
 let colorScheme = await M3.fetch().colors();
 
 console.log(colorScheme.primary); // Outputs color in RGBA format f.E. "#F4F678FF"
@@ -136,10 +139,9 @@ Then initialize our colors when our app loads for the first time, f.E. in Svelte
     import { onMount } from 'svelte';
     import { M3 } from 'tauri-plugin-m3';
 
-    const Material3 = new M3();
-
     onMount(async () => {
-        await Material3.fetch().apply();
+        await M3.fetch().apply();
+        await M3.barColor();
     });
 </script>
 
