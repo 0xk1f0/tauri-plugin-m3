@@ -61,10 +61,25 @@ Afterwards all the plugin's APIs are available through the JavaScript guest bind
 ```typescript
 import { M3 } from "tauri-plugin-m3";
 
-// choose either "dark", "light" or default to "system"
-let colorScheme = await M3.colors();
+// get the full material color palette
+// choose either "dark", "light" or "system" (default)
+let colorScheme = await M3.getColors("system");
+console.log(colorScheme.primary); // "#F4F678FF"
 
-console.log(colorScheme.primary); // Outputs color in RGBA format f.E. "#F4F678FF"
+// apply colors to CSS variables
+// choose either "dark", "light" or "system" (default)
+let isSuccess = await M3.applyColors("light");
+console.log(isSuccess); // "true"
+
+// get insets for compensating EdgeToEdge display
+// either already scale compensated or raw
+let deviceInsets = await M3.getInsets();
+console.log(deviceInsets.adjustedInsetTop); // f.E. 96
+
+// set the status and navigation bar color
+// choose either "dark", "light" or "system" (default)
+let isSuccess = await M3.setBarColor("dark");
+console.log(isSuccess); // "true"
 ```
 
 The following colors are available
@@ -139,7 +154,7 @@ Then initialize our colors when our app loads for the first time, f.E. in Svelte
     import { M3 } from 'tauri-plugin-m3';
 
     onMount(async () => {
-        await M3.apply("system");
+        await M3.applyColors("system");
         await M3.setBarColor("system");
     });
 </script>

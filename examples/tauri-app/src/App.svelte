@@ -10,13 +10,13 @@
 
     onMount(async () => {
         // get color values
-        colorScheme = await M3.fetch().colors();
+        colorScheme = await M3.getColors("system");
         // get insets
         insets = await M3.getInsets();
         // update environment
-        await M3.fetch("system").apply();
+        await M3.applyColors("system");
         // set bar color
-        await M3.barColor("system");
+        await M3.setBarColor("system");
     });
 
     async function switchTheme() {
@@ -25,14 +25,13 @@
             selectedTheme == "light" ||
             selectedTheme == "system"
         ) {
-            colorScheme = await M3.fetch(selectedTheme).colors();
-            await M3.fetch().apply();
+            colorScheme = await M3.getColors(selectedTheme);
         }
     }
 
     async function switchBar() {
         if (selectedBarColor == "dark" || selectedBarColor == "light") {
-            let result = await M3.barColor(selectedBarColor);
+            await M3.setBarColor(selectedBarColor);
         }
     }
 </script>

@@ -71,17 +71,18 @@ export class M3 {
      *
      * // either "dark", "light" or "system"
      * // default is "system"
-     * let status = await M3.setBarColor("dark");
+     * let isSuccess = await M3.setBarColor("dark");
      * ```
-     * @return A BarColorScheme object or false if unsuccessful
+     * @return A boolean indicating if successful or not
      */
     public static async setBarColor(
         color: "dark" | "light" | "system" = "system",
-    ): Promise<BarColorScheme | false> {
+    ): Promise<Boolean> {
         try {
-            return await invoke<BarColorScheme>("plugin:m3|bar_color", {
+            let result = await invoke<BarColorScheme>("plugin:m3|bar_color", {
                 color,
             });
+            return "error" in result ? false : true;
         } catch {
             return false;
         }
@@ -95,11 +96,11 @@ export class M3 {
      *
      * // either "dark", "light" or "system"
      * // default is "system"
-     * let colorScheme = await M3.colors("dark");
+     * let colorScheme = await M3.getColors("dark");
      * ```
      * @return A ColorScheme object or false if unsuccessful
      */
-    public static async colors(
+    public static async getColors(
         theme: "dark" | "light" | "system" = "system",
     ): Promise<ColorScheme | false> {
         try {
@@ -122,11 +123,11 @@ export class M3 {
      *
      * // either "dark", "light" or "system"
      * // default is "system"
-     * let isSuccess = await M3.apply("dark");
+     * let isSuccess = await M3.applyColors("dark");
      * ```
      * @return A boolean indicating if successful or not
      */
-    public static async apply(
+    public static async applyColors(
         theme: "dark" | "light" | "system" = "system",
     ): Promise<Boolean> {
         try {
