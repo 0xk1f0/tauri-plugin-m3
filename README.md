@@ -60,10 +60,9 @@ Afterwards all the plugin's APIs are available through the JavaScript guest bind
 
 ```typescript
 import { M3 } from "tauri-plugin-m3";
-import type { ColorScheme } from "tauri-plugin-m3";
 
 // choose either "dark", "light" or default to "system"
-let colorScheme = await M3.fetch().colors();
+let colorScheme = await M3.colors();
 
 console.log(colorScheme.primary); // Outputs color in RGBA format f.E. "#F4F678FF"
 ```
@@ -140,8 +139,8 @@ Then initialize our colors when our app loads for the first time, f.E. in Svelte
     import { M3 } from 'tauri-plugin-m3';
 
     onMount(async () => {
-        await M3.fetch().apply();
-        await M3.barColor();
+        await M3.apply("system");
+        await M3.setBarColor("system");
     });
 </script>
 

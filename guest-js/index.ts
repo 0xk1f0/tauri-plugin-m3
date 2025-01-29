@@ -41,30 +41,6 @@ export type BarColorScheme = {
     color?: string;
 };
 
-async function getColors(
-    colorScheme: Promise<ColorScheme>,
-): Promise<ColorScheme | false> {
-    try {
-        let scheme = await colorScheme;
-        if ("error" in scheme) return false;
-        return scheme;
-    } catch {
-        return false;
-    }
-}
-
-async function applyScheme(colorScheme: Promise<ColorScheme>): Promise<boolean> {
-    let scheme = await getColors(colorScheme);
-    if (!scheme) return false;
-    for (const [varName, colorValue] of Object.entries(colorScheme)) {
-        document.documentElement.style.setProperty(
-            `--${varName}`,
-            colorValue,
-        );
-    }
-    return true;
-}
-
 /**
  * Main `tauri-plugin-m3` Utility Class
  */
@@ -92,57 +68,82 @@ export class M3 {
      * @example
      * ```javascript
      * import { M3 } from "tauri-plugin-m3";
-     * 
+     *
      * // either "dark", "light" or "system"
      * // default is "system"
-     * let status = await M3.barColor("dark");
+     * let status = await M3.setBarColor("dark");
      * ```
      * @return A BarColorScheme object or false if unsuccessful
      */
-    public static async barColor(color: "dark" | "light" | "system" = "system"): Promise<BarColorScheme | false> {
+    public static async setBarColor(
+        color: "dark" | "light" | "system" = "system",
+    ): Promise<BarColorScheme | false> {
         try {
-            return await invoke<BarColorScheme>("plugin:m3|bar_color", { color });
+            return await invoke<BarColorScheme>("plugin:m3|bar_color", {
+                color,
+            });
         } catch {
             return false;
         }
     }
 
     /**
-     * Fetch Material3 colors from Android device
+     * Return the fetched ColorScheme
+     * @example
+     * ```javascript
+     * import { M3 } from "tauri-plugin-m3";
+     *
+     * // either "dark", "light" or "system"
+     * // default is "system"
+     * let colorScheme = await M3.colors("dark");
+     * ```
+     * @return A ColorScheme object or false if unsuccessful
      */
-    public static fetch(theme: "dark" | "light" | "system" = "system") {
-        let scheme = invoke<ColorScheme>("plugin:m3|colors", { theme });
-        return {
-            /**
-             * Return the fetched ColorScheme
-             * @example
-             * ```javascript
-             * import { M3 } from "tauri-plugin-m3";
-             * 
-             * // either "dark", "light" or "system"
-             * // default is "system"
-             * let colorScheme = await M3.fetch("dark").colors();
-             * ```
-             * @return A ColorScheme object or false if unsuccessful
-             */
-            colors: () => {
-                return getColors(scheme);
-            },
-            /**
-             * Apply all colors in ColorScheme as CSS environment variables
-             * @example
-             * ```javascript
-             * import { M3 } from "tauri-plugin-m3";
-             *
-             * // either "dark", "light" or "system"
-             * // default is "system"
-             * await M3.fetch("dark").apply();
-             * ```
-             * @return A boolean indicating if successful or not
-             */
-            apply: () => {
-                return applyScheme(scheme);
-            },
-        };
+    public static async colors(
+        theme: "dark" | "light" | "system" = "system",
+    ): Promise<ColorScheme | false> {
+        try {
+            let scheme: ColorScheme = await invoke<ColorScheme>(
+                "plugin:m3|colors",
+                { theme },
+            );
+            if ("error" in scheme) return false;
+            return scheme;
+        } catch {
+            return false;
+        }
+    }
+
+    /**
+     * Apply all colors in ColorScheme as CSS environment variables
+     * @example
+     * ```javascript
+     * import { M3 } from "tauri-plugin-m3";
+     *
+     * // either "dark", "light" or "system"
+     * // default is "system"
+     * let isSuccess = await M3.apply("dark");
+     * ```
+     * @return A boolean indicating if successful or not
+     */
+    public static async apply(
+        theme: "dark" | "light" | "system" = "system",
+    ): Promise<Boolean> {
+        try {
+            let scheme: ColorScheme = await invoke<ColorScheme>(
+                "plugin:m3|colors",
+                { theme },
+            );
+            if (!scheme || "error" in scheme) return false;
+            for (const [varName, colorValue] of Object.entries(scheme)) {
+                document.documentElement.style.setProperty(
+                    `--${varName}`,
+                    colorValue,
+                );
+            }
+            return true;
+        } catch {
+            return false;
+        }
     }
 }
