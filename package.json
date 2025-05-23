@@ -1,6 +1,6 @@
 {
     "name": "tauri-plugin-m3",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "author": "0xk1f0",
     "description": "Android Material3/MaterialYou Plugin",
     "type": "module",
@@ -20,8 +20,8 @@
         "README.md"
     ],
     "scripts": {
-        "build": "rollup -c",
-        "prepare": "rollup -c",
+        "build": "tsdown",
+        "prepare": "tsdown",
         "prepublishOnly": "npm run build",
         "pretest": "npm run build"
     },
@@ -29,9 +29,7 @@
         "@tauri-apps/api": "~2.5.0"
     },
     "devDependencies": {
-        "@rollup/plugin-typescript": "~12.1.2",
-        "rollup": "~4.41.0",
-        "typescript": "~5.8.2",
-        "tslib": "~2.8.1"
+        "tsdown": "~0.12.2",
+        "typescript": "~5.8.3"
     }
 }
