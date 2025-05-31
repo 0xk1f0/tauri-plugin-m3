@@ -15,17 +15,17 @@ pub struct M3<R: Runtime>(AppHandle<R>);
 impl<R: Runtime> M3<R> {
     pub fn colors(&self, _theme: String) -> crate::Result<M3Error> {
         Ok(M3Error {
-            error: Some("MaterialYou not supported on this device!".to_string()),
+            error: Some("M3 not supported on this device!".to_string()),
         })
     }
     pub fn insets(&self) -> crate::Result<M3Error> {
         Ok(M3Error {
-            error: Some("Insets are not supported on this device!".to_string()),
+            error: Some("M3 not supported on this device!".to_string()),
         })
     }
     pub fn bar_color(&self, _color: String) -> crate::Result<M3Error> {
         Ok(M3Error {
-            error: Some("Bar Color not supported on this device!".to_string()),
+            error: Some("M3 not supported on this device!".to_string()),
         })
     }
 }
