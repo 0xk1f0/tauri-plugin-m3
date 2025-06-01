@@ -56,6 +56,17 @@ fn main() {
 }
 ```
 
+Then set the permissions in `src-tauri/capabilities/default.json`
+
+```json
+{
+    "permissions": [
+        ...
+        "m3:default"
+    ]
+}
+```
+
 Afterwards all the plugin's APIs are available through the JavaScript guest bindings:
 
 ```typescript
@@ -109,6 +120,22 @@ type ColorScheme = {
     inverseOnSurface?: string;
     outline?: string;
 };
+```
+
+## Transparent Navigation Bar
+
+To get a fully transaprent navigation bar, add the following in your app
+
+`src-tauri/gen/android/app/src/main/res/values/themes.xml`
+
+```diff
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.stority" parent="Theme.MaterialComponents.DayNight.NoActionBar">
++        <item name="android:enforceNavigationBarContrast">false</item>
++        <item name="android:enforceStatusBarContrast">false</item>
+    </style>
+</resources>
 ```
 
 ## Global Theming
