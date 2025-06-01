@@ -55,10 +55,10 @@ pub struct M3Error {
 
 #[derive(Serialize)]
 pub struct ColorSchemePayload {
-    theme: String,
+    pub theme: String,
 }
 
 #[derive(Serialize)]
 pub struct BarColorPayload {
-    color: String,
+    pub color: String,
 }
