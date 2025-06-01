@@ -52,3 +52,13 @@ pub struct BarColorScheme {
 pub struct M3Error {
     pub error: Option<String>,
 }
+
+#[derive(Serialize)]
+pub struct ColorSchemePayload {
+    theme: String,
+}
+
+#[derive(Serialize)]
+pub struct BarColorPayload {
+    color: String,
+}
