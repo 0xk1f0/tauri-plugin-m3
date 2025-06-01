@@ -26,7 +26,7 @@ Install the Core plugin by adding the following to your `Cargo.toml` file:
 ```toml
 # via crates.io
 [dependencies]
-tauri-plugin-m3 = "0.2.0"
+tauri-plugin-m3 = "0.2.1"
 # or directly
 [dependencies]
 tauri-plugin-m3 = { git = "https://github.com/0xk1f0/tauri-plugin-m3" }
