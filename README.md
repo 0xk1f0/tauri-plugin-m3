@@ -56,12 +56,13 @@ fn main() {
 }
 ```
 
-Then set the permissions in `src-tauri/capabilities/default.json`
+Then set the default permissions for the plugin:
+
+`src-tauri/capabilities/default.json`
 
 ```json
 {
     "permissions": [
-        ...
         "m3:default"
     ]
 }
