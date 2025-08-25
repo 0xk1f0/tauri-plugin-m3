@@ -38,10 +38,6 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
     override fun load(webView: WebView) {
         val window = activity.getWindow()
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.apply {
-            statusBarColor = Color.TRANSPARENT;
-            navigationBarColor = Color.TRANSPARENT;
-        }
     }
     @Command
     fun colors(invoke: Invoke) {

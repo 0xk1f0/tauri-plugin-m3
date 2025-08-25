@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-m3"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["0xk1f0"]
 description = "Android Material3/MaterialYou Plugin"
 readme = "README.md"

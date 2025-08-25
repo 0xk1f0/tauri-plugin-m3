@@ -5,12 +5,14 @@ plugins {
 
 android {
     namespace = "com.plugin.m3"
-    compileSdk = 34
+    compileSdk = 36
+
     defaultConfig {
         minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
