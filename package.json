@@ -29,7 +29,7 @@
         "@tauri-apps/api": "2.9"
     },
     "devDependencies": {
-        "tsdown": "0.16",
+        "tsdown": "0.17",
         "typescript": "5.9"
     }
 }
