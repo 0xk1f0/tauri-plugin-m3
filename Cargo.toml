@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-m3"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["0xk1f0"]
 description = "Android Material3/MaterialYou Plugin"
 readme = "README.md"
@@ -22,9 +22,9 @@ exclude = [
 ]
 
 [dependencies]
-tauri = "2.5.1"
+tauri = "2.9"
 serde = "1.0"
 thiserror = "2.0"
 
 [build-dependencies]
-tauri-plugin = { version = "2.2.0", features = ["build"] }
+tauri-plugin = { version = "2.5", features = ["build"] }

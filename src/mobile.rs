@@ -1,5 +1,4 @@
 use serde::de::DeserializeOwned;
-use serde::Serialize;
 use tauri::{
     plugin::{PluginApi, PluginHandle},
     AppHandle, Runtime,
@@ -11,6 +10,9 @@ use crate::models::*;
 const PLUGIN_IDENTIFIER: &str = "com.plugin.m3";
 
 pub fn init<R: Runtime, C: DeserializeOwned>(
+    #[cfg(target_os = "android")]
+    _app: &AppHandle<R>,
+    #[cfg(target_os = "ios")]
     app: &AppHandle<R>,
     api: PluginApi<R, C>,
 ) -> crate::Result<M3<R>> {

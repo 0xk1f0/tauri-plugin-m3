@@ -1,6 +1,6 @@
 {
     "name": "tauri-plugin-m3",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "author": "0xk1f0",
     "description": "Android Material3/MaterialYou Plugin",
     "type": "module",

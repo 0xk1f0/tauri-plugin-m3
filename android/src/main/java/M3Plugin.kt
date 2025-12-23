@@ -35,10 +35,6 @@ class BarOptions {
 
 @TauriPlugin
 class M3Plugin(private val activity: Activity): Plugin(activity) {
-    override fun load(webView: WebView) {
-        val window = activity.getWindow()
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-    }
     @Command
     fun colors(invoke: Invoke) {
         val ret = JSObject()
