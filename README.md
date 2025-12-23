@@ -12,7 +12,6 @@
 
 ## Features
 
-- Automatically enables Android's [EdgeToEdge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) StatusBar and NavigationBar Styling
 - Access MaterialYou Dynamic Color Palette
 - Change Status Bar and Navigation Bar Color
 - Access Window Insets to align EdgeToEdge layout correctly
