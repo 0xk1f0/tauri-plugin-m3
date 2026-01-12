@@ -7,9 +7,7 @@
         "strict": true,
         "noUnusedLocals": true,
         "noImplicitAny": true,
-        "noEmit": true,
-        "strictNullChecks": true,
-        "verbatimModuleSyntax": true
+        "noEmit": true
     },
     "include": ["guest-js/*.ts"],
     "exclude": ["dist-js", "node_modules"]
