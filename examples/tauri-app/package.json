@@ -12,7 +12,7 @@
         "make:android": "NDK_HOME=$ANDROID_HOME/ndk/29.0.14206865 JAVA_HOME=/usr/lib/jvm/java-21-openjdk tauri android build --split-per-abi --target aarch64"
     },
     "dependencies": {
-        "@tauri-apps/api": "2.9",
+        "@tauri-apps/api": "2.10",
         "tauri-plugin-m3": "file:../../"
     },
     "devDependencies": {
