@@ -105,10 +105,10 @@ export class M3 {
         color: "dark" | "light" | "system" = "system",
     ): Promise<Boolean> {
         try {
-            let result = await invoke<BarColorScheme>("plugin:m3|bar_color", {
+            await invoke<BarColorScheme>("plugin:m3|bar_color", {
                 color,
             });
-            return "error" in result ? false : true; // unnecessary check
+            return true;
         } catch {
             return false;
         }
@@ -134,7 +134,6 @@ export class M3 {
                 "plugin:m3|colors",
                 { theme },
             );
-            // if ("error" in scheme) return false;
             return scheme;
         } catch {
             return false;
@@ -161,7 +160,6 @@ export class M3 {
                 "plugin:m3|colors",
                 { theme },
             );
-            if (!scheme || "error" in scheme) return false;
             for (const [varName, colorValue] of Object.entries(scheme)) {
                 document.documentElement.style.setProperty(
                     `--${varName}`,
