@@ -20,9 +20,35 @@ export type ColorScheme = {
     onSurface?: string;
     surfaceVariant?: string;
     onSurfaceVariant?: string;
+    surfaceTint?: string;
     inverseSurface?: string;
     inverseOnSurface?: string;
+    error?: string;
+    onError?: string;
+    errorContainer?: string;
+    onErrorContainer?: string;
     outline?: string;
+    outlineVariant?: string;
+    scrim?: string;
+    surfaceBright?: string;
+    surfaceDim?: string;
+    surfaceContainer?: string;
+    surfaceContainerHigh?: string;
+    surfaceContainerHighest?: string;
+    surfaceContainerLow?: string;
+    surfaceContainerLowest?: string;
+    primaryFixed?: string;
+    primaryFixedDim?: string;
+    onPrimaryFixed?: string;
+    onPrimaryFixedVariant?: string;
+    secondaryFixed?: string;
+    secondaryFixedDim?: string;
+    onSecondaryFixed?: string;
+    onSecondaryFixedVariant?: string;
+    tertiaryFixed?: string;
+    tertiaryFixedDim?: string;
+    onTertiaryFixed?: string;
+    onTertiaryFixedVariant?: string;
 };
 
 export type InsetsScheme = {
@@ -79,10 +105,10 @@ export class M3 {
         color: "dark" | "light" | "system" = "system",
     ): Promise<Boolean> {
         try {
-            let result = await invoke<BarColorScheme>("plugin:m3|bar_color", {
+            await invoke<BarColorScheme>("plugin:m3|bar_color", {
                 color,
             });
-            return "error" in result ? false : true;
+            return true;
         } catch {
             return false;
         }
@@ -108,7 +134,6 @@ export class M3 {
                 "plugin:m3|colors",
                 { theme },
             );
-            if ("error" in scheme) return false;
             return scheme;
         } catch {
             return false;
@@ -135,7 +160,6 @@ export class M3 {
                 "plugin:m3|colors",
                 { theme },
             );
-            if (!scheme || "error" in scheme) return false;
             for (const [varName, colorValue] of Object.entries(scheme)) {
                 document.documentElement.style.setProperty(
                     `--${varName}`,
