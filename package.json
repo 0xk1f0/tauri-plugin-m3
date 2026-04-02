@@ -30,6 +30,6 @@
     },
     "devDependencies": {
         "tsdown": "0.21",
-        "typescript": "5.9"
+        "typescript": "6.0"
     }
 }
