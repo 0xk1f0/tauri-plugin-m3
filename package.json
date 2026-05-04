@@ -26,7 +26,7 @@
         "pretest": "npm run build"
     },
     "dependencies": {
-        "@tauri-apps/api": "2.10"
+        "@tauri-apps/api": "2.11"
     },
     "devDependencies": {
         "tsdown": "0.21",
