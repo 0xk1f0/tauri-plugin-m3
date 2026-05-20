@@ -1,41 +1,33 @@
-name: "Publish Plugin"
+name: "Publish to crates.io and npmjs.org"
 
 on:
   release:
-    types: [ "published" ]
+    types: ["published"]
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   publish-npmjs:
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node stable
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          registry-url: 'https://registry.npmjs.org'
-      - name: Publish npmjs.org Package
-        run: | 
-            npm install
-            npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+      - run: npm install && npm run build
+      - run: npm publish --provenance --access public
   publish-cratesio:
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@stable
-      - name: Install dependencies
-        run: |
-            sudo apt-get update
-            sudo apt-get install -y curl wget file libxdo-dev build-essential libssl-dev libgtk-3-dev libappindicator3-dev libwebkit2gtk-4.1-dev librsvg2-dev
-      - name: Publish crates.io Package
-        run: cargo publish --token ${CRATES_AUTH_TOKEN} 
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y curl wget file libxdo-dev build-essential libssl-dev libgtk-3-dev libappindicator3-dev libwebkit2gtk-4.1-dev librsvg2-dev
+      - run: cargo publish --token ${CRATES_AUTH_TOKEN}
         env:
           CRATES_AUTH_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
