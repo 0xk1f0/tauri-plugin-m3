@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-contrast"
+description = "Enables the contrast command without any pre-configured scope."
+commands.allow = ["contrast"]
+
+[[permission]]
+identifier = "deny-contrast"
+description = "Denies the contrast command without any pre-configured scope."
+commands.deny = ["contrast"]

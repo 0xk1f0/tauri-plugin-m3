@@ -10,10 +10,8 @@ use crate::models::*;
 const PLUGIN_IDENTIFIER: &str = "com.plugin.m3";
 
 pub fn init<R: Runtime, C: DeserializeOwned>(
-    #[cfg(target_os = "android")]
-    _app: &AppHandle<R>,
-    #[cfg(target_os = "ios")]
-    app: &AppHandle<R>,
+    #[cfg(target_os = "android")] _app: &AppHandle<R>,
+    #[cfg(target_os = "ios")] app: &AppHandle<R>,
     api: PluginApi<R, C>,
 ) -> crate::Result<M3<R>> {
     #[cfg(target_os = "android")]
@@ -43,6 +41,9 @@ impl<R: Runtime> M3<R> {
             .run_mobile_plugin("barColor", BarColorPayload { color })
             .map_err(Into::into)
     }
+    pub fn contrast(&self) -> crate::Result<ContrastScheme> {
+        self.0.run_mobile_plugin("contrast", "").map_err(Into::into)
+    }
 }
 #[cfg(target_os = "ios")]
 impl<R: Runtime> M3<R> {
@@ -57,6 +58,11 @@ impl<R: Runtime> M3<R> {
         })
     }
     pub fn bar_color(&self, _color: String) -> crate::Result<M3Error> {
+        Ok(M3Error {
+            error: Some("M3 not supported on iOS!".to_string()),
+        })
+    }
+    pub fn contrast(&self) -> crate::Result<M3Error> {
         Ok(M3Error {
             error: Some("M3 not supported on iOS!".to_string()),
         })

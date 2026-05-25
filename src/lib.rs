@@ -37,7 +37,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         .invoke_handler(tauri::generate_handler![
             commands::colors,
             commands::insets,
-            commands::bar_color
+            commands::bar_color,
+            commands::contrast
         ])
         .setup(|app, api| {
             #[cfg(mobile)]

@@ -1,8 +1,10 @@
 package com.plugin.m3
 
 import android.app.Activity
+import android.app.UiModeManager
 import android.webkit.WebView
 import android.view.Window
+import android.view.accessibility.AccessibilityManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -101,6 +103,7 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         }
         invoke.resolve(ret)
     }
+
     @Command
     fun insets(invoke: Invoke) {
         val ret = JSObject()
@@ -120,6 +123,7 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
         ret.put("scaleFactor", displayMetrics.density)
         invoke.resolve(ret)
     }
+
     @Command
     fun barColor(invoke: Invoke) {
         val ret = JSObject()
@@ -132,6 +136,21 @@ class M3Plugin(private val activity: Activity): Plugin(activity) {
             if (isNightMode(context)) setLightStatusBar(window, false) else setLightStatusBar(window, true)
         }
         ret.put("color", args.color)
+        invoke.resolve(ret)
+    }
+
+    @Command
+    fun contrast(invoke: Invoke) {
+        val ret = JSObject()
+        val context = activity.getApplication().getApplicationContext()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val am = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
+            ret.put("isHighTextContrast", am?.isHighContrastTextEnabled() ?: false)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val uim = context.getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager
+            ret.put("contrastLevel", uim?.getContrast() ?: 0)
+        }
         invoke.resolve(ret)
     }
 

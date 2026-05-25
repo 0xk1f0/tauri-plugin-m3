@@ -28,4 +28,9 @@ impl<R: Runtime> M3<R> {
             error: Some("M3 not supported on Desktop!".to_string()),
         })
     }
+    pub fn contrast(&self) -> crate::Result<M3Error> {
+        Ok(M3Error {
+            error: Some("M3 not supported on Desktop!".to_string()),
+        })
+    }
 }

@@ -7,6 +7,7 @@ Default permissions for the plugin
 - `allow-colors`
 - `allow-insets`
 - `allow-bar-color`
+- `allow-contrast`
 
 ## Permission Table
 
@@ -65,6 +66,32 @@ Enables the colors command without any pre-configured scope.
 <td>
 
 Denies the colors command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`m3:allow-contrast`
+
+</td>
+<td>
+
+Enables the contrast command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`m3:deny-contrast`
+
+</td>
+<td>
+
+Denies the contrast command without any pre-configured scope.
 
 </td>
 </tr>

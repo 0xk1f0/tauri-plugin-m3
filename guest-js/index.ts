@@ -67,6 +67,19 @@ export type BarColorScheme = {
     color?: string;
 };
 
+export type ContrastScheme = {
+    /**
+     * Color contrast level from -1.0 (lower) to 1.0 (higher), 0.0 is default.
+     * Android 14 (API 34+)
+     */
+    contrastLevel?: number;
+    /**
+     * Whether the user has enabled high text contrast in accessibility settings.
+     * Android 12 (API 31+)
+     */
+    isHighTextContrast?: boolean;
+};
+
 /**
  * Main `tauri-plugin-m3` Utility Class
  */
@@ -135,6 +148,24 @@ export class M3 {
                 { theme },
             );
             return scheme;
+        } catch {
+            return false;
+        }
+    }
+
+    /**
+     * Get the current contrast accessibility settings
+     * @example
+     * ```javascript
+     * import { M3 } from "tauri-plugin-m3";
+     *
+     * let contrast = await M3.getContrast();
+     * ```
+     * @return A ContrastScheme object or false if unsuccessful
+     */
+    public static async getContrast(): Promise<ContrastScheme | false> {
+        try {
+            return await invoke<ContrastScheme>("plugin:m3|contrast");
         } catch {
             return false;
         }

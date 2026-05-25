@@ -21,8 +21,18 @@ pub(crate) async fn insets<R: Runtime>(app: AppHandle<R>) -> Result<InsetsScheme
 #[command]
 #[cfg(mobile)]
 #[cfg(target_os = "android")]
-pub(crate) async fn bar_color<R: Runtime>(app: AppHandle<R>, color: String) -> Result<BarColorScheme> {
+pub(crate) async fn bar_color<R: Runtime>(
+    app: AppHandle<R>,
+    color: String,
+) -> Result<BarColorScheme> {
     app.m3().bar_color(color)
+}
+
+#[command]
+#[cfg(mobile)]
+#[cfg(target_os = "android")]
+pub(crate) async fn contrast<R: Runtime>(app: AppHandle<R>) -> Result<ContrastScheme> {
+    app.m3().contrast()
 }
 
 #[command]
@@ -47,6 +57,13 @@ pub(crate) async fn bar_color<R: Runtime>(app: AppHandle<R>, color: String) -> R
 }
 
 #[command]
+#[cfg(mobile)]
+#[cfg(target_os = "ios")]
+pub(crate) async fn contrast<R: Runtime>(app: AppHandle<R>) -> Result<M3Error> {
+    app.m3().contrast()
+}
+
+#[command]
 #[cfg(desktop)]
 pub(crate) async fn colors<R: Runtime>(app: AppHandle<R>, theme: String) -> Result<M3Error> {
     app.m3().colors(theme)
@@ -62,4 +79,10 @@ pub(crate) async fn insets<R: Runtime>(app: AppHandle<R>) -> Result<M3Error> {
 #[cfg(desktop)]
 pub(crate) async fn bar_color<R: Runtime>(app: AppHandle<R>, color: String) -> Result<M3Error> {
     app.m3().bar_color(color)
+}
+
+#[command]
+#[cfg(desktop)]
+pub(crate) async fn contrast<R: Runtime>(app: AppHandle<R>) -> Result<M3Error> {
+    app.m3().contrast()
 }

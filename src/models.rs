@@ -75,6 +75,13 @@ pub struct BarColorScheme {
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
+pub struct ContrastScheme {
+    pub contrast_level: Option<f64>,
+    pub is_high_text_contrast: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct M3Error {
     pub error: Option<String>,
 }

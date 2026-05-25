@@ -22,9 +22,9 @@ exclude = [
 ]
 
 [dependencies]
-tauri = "2.9"
+tauri = "2.11"
 serde = "1.0"
 thiserror = "2.0"
 
 [build-dependencies]
-tauri-plugin = { version = "2.5", features = ["build"] }
+tauri-plugin = { version = "2.6", features = ["build"] }

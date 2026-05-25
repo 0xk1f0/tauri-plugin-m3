@@ -319,6 +319,18 @@
           "markdownDescription": "Denies the colors command without any pre-configured scope."
         },
         {
+          "description": "Enables the contrast command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-contrast",
+          "markdownDescription": "Enables the contrast command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the contrast command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-contrast",
+          "markdownDescription": "Denies the contrast command without any pre-configured scope."
+        },
+        {
           "description": "Enables the insets command without any pre-configured scope.",
           "type": "string",
           "const": "allow-insets",
@@ -331,10 +343,10 @@
           "markdownDescription": "Denies the insets command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-colors`\n- `allow-insets`\n- `allow-bar-color`",
+          "description": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-colors`\n- `allow-insets`\n- `allow-bar-color`\n- `allow-contrast`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-colors`\n- `allow-insets`\n- `allow-bar-color`"
+          "markdownDescription": "Default permissions for the plugin\n#### This default permission set includes:\n\n- `allow-colors`\n- `allow-insets`\n- `allow-bar-color`\n- `allow-contrast`"
         }
       ]
     }
